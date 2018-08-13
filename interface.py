@@ -1,6 +1,8 @@
 from json import load
 from block_io import BlockIo
 
+from pymongo import MongoClient
+
 import csv
 
 version = 2
@@ -78,3 +80,33 @@ def pay_ledger():
                 else:
 
                     deposit(row['Email'], row['Payment'])
+
+def create_new_bounty(teaser, ptext, answer, instructions, imgLink):
+
+    doc = {
+        "teaser" : teaser,
+        "ptext" : ptext,
+        "answer" : int(answer),
+        "instructions" : instructions,
+        "imgLink" : imgLink,
+        "solved" : False,
+        "reward" : 10
+    }
+
+    MONGO_URI = data['MONGO_URI']
+
+    client = MongoClient(MONGO_URI, ssl=True)
+
+    db = client['mathpay']
+
+    bounties = db.bounties
+
+    result = bounties.insert_one(doc)
+
+    if result:
+
+        print("Bounty added successfully.")
+
+    else:
+
+        print("Error occured.")
