@@ -1,6 +1,6 @@
 base58==1.0.0
 block-io==1.1.6
-certifi==2018.8.13
+certifi==2022.12.7
 chardet==3.0.4
 dnspython==1.15.0
 ecdsa==0.13
